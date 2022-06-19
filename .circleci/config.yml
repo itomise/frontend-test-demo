@@ -4,23 +4,25 @@ orbs:
 jobs:
   test:
     docker:
-      - image: 'cimg/base:stable'
+      - image: cimg/node:16.14.2
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          node-version: '16.14'
+      # - node/install:
+      #     install-yarn: true
+      #     node-version: '16.14'
       - restore_cache:
-          name: Yarn パッケージのキャッシュの復元
+          name: Restore yarn package cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: yarn
+      - run:
+          name: install
+          command: yarn install
+      - run: yarn test
       - save_cache:
-          name: Yarn パッケージのキャッシュの保存
+          name: Save yarn package cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run: yarn test
 workflows:
   test:
     jobs:
