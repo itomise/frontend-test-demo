@@ -21,5 +21,11 @@ describe('test func', () => {
     it('4 should be 4', () => {
         expect(sampleNumberFunc(4)).toBe(4)
     })
+    it('5 should be 5', () => {
+        expect(sampleNumberFunc(5)).toBe(5)
+    })
+    it('6 should be 6', () => {
+        expect(sampleNumberFunc(6)).toBe(6)
+    })
 
 })
