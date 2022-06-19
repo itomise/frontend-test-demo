@@ -5,9 +5,6 @@ jobs:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      # - node/install:
-      #     install-yarn: true
-      #     node-version: '16.14'
       - restore_cache:
           name: Restore yarn package cache
           keys:
