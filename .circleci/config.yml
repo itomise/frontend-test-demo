@@ -1,17 +1,13 @@
 version: 2.1
+  node: circleci/node@16.14.2
 
-jobs:
-  print-a-message:
-    docker:
-      - image: cimg/base:2022.03
-    parameters:
-      message:
-        type: string
-    steps:
-      - run: echo << parameters.message >>
-
-workflows:
-  my-workflow:
-    jobs:
-      - print-a-message:
-          message: Hello!
+  jobs:
+    test:
+      executor: node/default
+      steps:
+        - checkout
+        - node/install-packages:
+            pkg-manager: yarn
+        - run:
+            command: yarn test
+            name: Run tests
