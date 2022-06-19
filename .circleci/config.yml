@@ -6,7 +6,10 @@ jobs:
     docker:
       - image: 'cimg/base:stable'
     steps:
-      - run: yarn
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: '16.14'
       - run: yarn test
 workflows:
   test:
