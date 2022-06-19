@@ -1,10 +1,5 @@
 version: 2.1
 
-executors:
-  default:
-    docker:
-      - image: cimg/node:16.14.2
-
 commands:
   setup_yarn:
     description: "Setup yarn with cache"
@@ -22,19 +17,22 @@ commands:
 
 jobs:
   test:
-    executors: default
+    docker:
+      - image: cimg/node:16.14.2
     steps:
       - checkout
       - setup_yarn
       - run: yarn test
   type-check:
-    executors: default
+    docker:
+      - image: cimg/node:16.14.2
     steps:
       - checkout
       - setup_yarn
       - run: yarn type-check
   test-storybook:
-    executors: default
+    docker:
+      - image: cimg/node:16.14.2
     steps:
       - checkout
       - setup_yarn
