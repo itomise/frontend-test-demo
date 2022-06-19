@@ -48,6 +48,9 @@ jobs:
       - run:
           name: install
           command: yarn install
+      - run:
+          name: install playwright browsers and dependencies
+          command: npx playwright install --with-deps
       - run: yarn test-storybook:ci
       - save_cache:
           name: Save yarn package cache
