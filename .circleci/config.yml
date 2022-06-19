@@ -36,8 +36,30 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+  test-storybook:
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: install
+          command: yarn install
+      - run:
+          name: install playwright browsers and dependencies
+          command: npx playwright install --with-deps
+      - run: yarn test-storybook:ci
+      - save_cache:
+          name: Save yarn package cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 workflows:
   test:
     jobs:
       - test
       - type-check
+      - test-storybook
