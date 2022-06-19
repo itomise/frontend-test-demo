@@ -1,13 +1,13 @@
 version: 2.1
+orbs:
   node: circleci/node@16.14.2
-
-  jobs:
-    test:
-      executor: node/default
-      steps:
-        - checkout
-        - node/install-packages:
-            pkg-manager: yarn
-        - run:
-            command: yarn test
-            name: Run tests
+jobs:
+  build:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+      - run: npm run test
