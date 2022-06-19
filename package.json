@@ -5,7 +5,8 @@
   "author": "itomise <itomise.mizumi@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@swc/core": "^1.2.203",
