@@ -1,7 +1,7 @@
 steps:
   - name: gcr.io/cloud-builders/gsutil
     id: get-cache-file
-    args: ['cp', 'gs://cloud-build-cache/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
+    args: ['cp', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
   - name: bash
     id: extract-cache-file
     args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
@@ -27,6 +27,6 @@ steps:
     waitFor: ['install']
   - name: gcr.io/cloud-builders/gsutil
     id: upload-cache-file
-    args: ['cp', 'test-node-modules-cache.tar.gz', 'gs://cloud-build-cache/test-node-modules-cache.tar.gz']
+    args: ['cp', 'test-node-modules-cache.tar.gz', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz']
     waitFor: ['compress-cache-file']
   
