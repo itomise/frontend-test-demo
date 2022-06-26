@@ -1,0 +1,9 @@
+steps:
+  - name: 'node:14.17.0'
+    id: 'install'
+    entrypoint: 'yarn'
+    args: ['install']
+  - name: 'node:14.17.0'
+    id: 'lint'
+    entrypoint: 'yarn'
+    args: 'type-check'
