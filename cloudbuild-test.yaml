@@ -1,10 +1,10 @@
 steps:
-  - name: gcr.io/cloud-builders/gsutil
-    id: get-cache-file
-    args: ['cp', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
-  - name: bash
-    id: extract-cache-file
-    args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
+  # - name: gcr.io/cloud-builders/gsutil
+  #   id: get-cache-file
+  #   args: ['cp', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
+  # - name: bash
+  #   id: extract-cache-file
+  #   args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
   
   - name: node:14.17.0
     id: install
