@@ -1,62 +1,46 @@
 version: 2.1
+
+commands:
+  setup_yarn:
+    description: "Setup yarn with cache"
+    steps:
+      - restore_cache:
+          name: Restore yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          name: Save yarn package cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
 jobs:
   test:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - restore_cache:
-          name: Restore yarn package cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: install
-          command: yarn install
+      - setup_yarn
       - run: yarn test
-      - save_cache:
-          name: Save yarn package cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
   type-check:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - restore_cache:
-          name: Restore yarn package cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: install
-          command: yarn install
+      - setup_yarn
       - run: yarn type-check
-      - save_cache:
-          name: Save yarn package cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
   test-storybook:
     docker:
       - image: cimg/node:16.14.2
     steps:
       - checkout
-      - restore_cache:
-          name: Restore yarn package cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: install
-          command: yarn install
+      - setup_yarn
+      - run: yarn type-check
       - run:
           name: install playwright browsers and dependencies
           command: npx playwright install --with-deps
       - run: yarn test-storybook:ci
-      - save_cache:
-          name: Save yarn package cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
 workflows:
   test:
     jobs:
