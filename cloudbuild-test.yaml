@@ -20,6 +20,16 @@ steps:
     entrypoint: yarn
     args: ['test']
     waitFor: ['install']
+  - name: node:14.17.0
+    id: install-playwright
+    entrypoint: npx
+    args: ['playwright', 'install', '--with-deps']
+    waitFor: ['install']
+  - name: node:14.17.0
+    id: test-storybook
+    entrypoint: yarn
+    args: ['test-storybook:ci']
+    waitFor: ['install-playwright']
 
   - name: bash
     id: compress-cache-file
