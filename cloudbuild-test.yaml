@@ -1,9 +1,25 @@
 steps:
-  - name: 'node:14.17.0'
-    id: 'install'
-    entrypoint: 'yarn'
+  # - name: gcr.io/cloud-builders/gsutil
+  #   id: get-cache-file
+  #   args: ['cp', 'gs://cloud-build-cache/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
+  # - name: bash
+  #   id: extract-cache-file
+  #   args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
+  
+  - name: node:14.17.0
+    id: install
+    entrypoint: yarn
     args: ['install']
-  - name: 'node:14.17.0'
-    id: 'lint'
-    entrypoint: 'yarn'
+  - name: node:14.17.0
+    id: lint
+    entrypoint: yarn
     args: ['type-check']
+
+  - name: bash
+    id: compress-cache-file
+    args: ['tar', 'czf', 'test-node-modules-cache.tar.gz', 'node_modules']
+    waitFor: ['install']
+  - name: gcr.io/cloud-builders/gsutil
+    args: ['cp', 'test-node-modules-cache.tar.gz', 'gs://cloud-build-cache/test-node-modules-cache.tar.gz']
+    waitFor: ['compress-cache-file']
+  
