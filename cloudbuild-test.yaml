@@ -6,26 +6,26 @@ steps:
     id: extract-cache-file
     args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
   
-  - name: node:14.17.0
+  - name: node:16.14.0
     id: install
     entrypoint: yarn
     args: ['install']
-  - name: node:14.17.0
+  - name: node:16.14.0
     id: lint
     entrypoint: yarn
     args: ['type-check']
     waitFor: ['install']
-  - name: node:14.17.0
+  - name: node:16.14.0
     id: test
     entrypoint: yarn
     args: ['test']
     waitFor: ['install']
-  - name: node:14.17.0
+  - name: node:16.14.0
     id: install-playwright
     entrypoint: npx
     args: ['playwright', 'install']
     waitFor: ['install']
-  - name: node:14.17.0
+  - name: node:16.14.0
     id: test-storybook
     entrypoint: yarn
     args: ['test-storybook:ci']
