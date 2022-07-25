@@ -23,7 +23,7 @@ steps:
   - name: node:16.14.0
     id: install-playwright
     entrypoint: npx
-    args: ['playwright', 'install-deps']
+    args: ['playwright', 'install', '--with-deps']
     waitFor: ['install']
   - name: node:16.14.0
     id: test-storybook
