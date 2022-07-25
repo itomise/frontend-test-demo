@@ -1,42 +1,46 @@
 steps:
-  - name: gcr.io/cloud-builders/gsutil
-    id: get-cache-file
-    args: ['cp', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
-  - name: bash
-    id: extract-cache-file
-    args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'us-west2-docker.pkg.dev/next-gae-demo/quickstart-docker-repo/quickstart-image:tag1', '.' ]
+  images:
+  - 'us-west2-docker.pkg.dev/next-gae-demo/quickstart-docker-repo/quickstart-image:tag1'
+  # - name: gcr.io/cloud-builders/gsutil
+  #   id: get-cache-file
+  #   args: ['cp', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
+  # - name: bash
+  #   id: extract-cache-file
+  #   args: ['tar', 'xzf', 'test-node-modules-cache.tar.gz']
   
-  - name: node:16.14.0
-    id: install
-    entrypoint: yarn
-    args: ['install']
-  - name: node:16.14.0
-    id: lint
-    entrypoint: yarn
-    args: ['type-check']
-    waitFor: ['install']
-  - name: node:16.14.0
-    id: test
-    entrypoint: yarn
-    args: ['test']
-    waitFor: ['install']
-  - name: node:16.14.0
-    id: install-playwright
-    entrypoint: npx
-    args: ['playwright', 'install', '--with-deps']
-    waitFor: ['install']
-  - name: node:16.14.0
-    id: test-storybook
-    entrypoint: yarn
-    args: ['test-storybook:ci']
-    waitFor: ['install-playwright']
+  # - name: node:16.14.0
+  #   id: install
+  #   entrypoint: yarn
+  #   args: ['install']
+  # - name: node:16.14.0
+  #   id: lint
+  #   entrypoint: yarn
+  #   args: ['type-check']
+  #   waitFor: ['install']
+  # - name: node:16.14.0
+  #   id: test
+  #   entrypoint: yarn
+  #   args: ['test']
+  #   waitFor: ['install']
+  # - name: node:16.14.0
+  #   id: install-playwright
+  #   entrypoint: npx
+  #   args: ['playwright', 'install', '--with-deps']
+  #   waitFor: ['install']
+  # - name: node:16.14.0
+  #   id: test-storybook
+  #   entrypoint: yarn
+  #   args: ['test-storybook:ci']
+  #   waitFor: ['install-playwright']
 
-  - name: bash
-    id: compress-cache-file
-    args: ['tar', 'czf', 'test-node-modules-cache.tar.gz', 'node_modules']
-    waitFor: ['install']
-  - name: gcr.io/cloud-builders/gsutil
-    id: upload-cache-file
-    args: ['cp', 'test-node-modules-cache.tar.gz', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz']
-    waitFor: ['compress-cache-file']
+  # - name: bash
+  #   id: compress-cache-file
+  #   args: ['tar', 'czf', 'test-node-modules-cache.tar.gz', 'node_modules']
+  #   waitFor: ['install']
+  # - name: gcr.io/cloud-builders/gsutil
+  #   id: upload-cache-file
+  #   args: ['cp', 'test-node-modules-cache.tar.gz', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz']
+  #   waitFor: ['compress-cache-file']
   
