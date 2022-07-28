@@ -1,7 +1,15 @@
 steps:
-  - name: 'us-west2-docker.pkg.dev/next-gae-demo/quickstart-docker-repo/quickstart-image:tag1'
-images:
-  - 'us-west2-docker.pkg.dev/next-gae-demo/quickstart-docker-repo/quickstart-image:tag1'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/next-gae-demo/test-image', '.']
+  - name: 'gcr.io/next-gae-demo/test-image'
+    args: ['node', '--version']
+  - name: 'gcr.io/next-gae-demo/test-image'
+    args: ['npx', 'playwright', 'install', '--with-deps']
+    # args: ['playwright', 'install', '--with-deps']
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args: [ 'build', '-t', 'us-west2-docker.pkg.dev/next-gae-demo/quickstart-docker-repo/quickstart-image:tag1', '.' ]
+# images:
+#   - 'us-west2-docker.pkg.dev/next-gae-demo/quickstart-docker-repo/quickstart-image:tag1'
   # - name: gcr.io/cloud-builders/gsutil
   #   id: get-cache-file
   #   args: ['cp', 'gs://cloud-build-cache-node-module/test-node-modules-cache.tar.gz', 'test-node-modules-cache.tar.gz']
